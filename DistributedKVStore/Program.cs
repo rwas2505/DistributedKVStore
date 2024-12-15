@@ -6,13 +6,28 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddGrpc();
 
+// Uncomment to enable logging during runtime for debugging
+//builder.Logging.ClearProviders();
+//builder.Logging.AddConsole();
+
 // Configure Kestrel for HTTP/1 and HTTP/2
 builder.WebHost.ConfigureKestrel(options =>
 {
+    // HTTP/1.1 (for REST API) on port 5000
     options.ListenAnyIP(5000, listenOptions =>
     {
-        listenOptions.Protocols = HttpProtocols.Http1AndHttp2;
+        // curl - k https://localhost:5001/weatherforecast
+        listenOptions.Protocols = HttpProtocols.Http1; // Only HTTP/1.1
     });
+
+    // HTTP/2 with TLS (for gRPC) on port 5001
+    options.ListenAnyIP(5001, listenOptions =>
+    {
+        // grpcurl - insecure - proto Protos / Store.proto - d '{"key":"example"}' localhost: 5001 Store.Get
+        listenOptions.Protocols = HttpProtocols.Http2; // Only HTTP/2
+        listenOptions.UseHttps(); // Enable HTTPS for gRPC
+    });
+
 });
 
 // Add services to the container.
