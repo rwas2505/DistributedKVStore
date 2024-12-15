@@ -13,16 +13,21 @@ builder.Services.AddGrpc();
 // Configure Kestrel for HTTP/1 and HTTP/2
 builder.WebHost.ConfigureKestrel(options =>
 {
+    // HTTP/1.1 (for REST API) on port 5000
     options.ListenAnyIP(5000, listenOptions =>
     {
-        listenOptions.Protocols = HttpProtocols.Http1AndHttp2;
-
-        // Uncommenting the below UseHttps() method will enable TLS
-        // This is required to use tools like grpcurl to hit the grpc services
-        // because grpcurl needs HTTP2. The following command should work on a local build:
-        // grpcurl -insecure -proto Protos/Store.proto -d '{"key":"example"}' localhost:5000 Store.Get
-        listenOptions.UseHttps(); // Enable HTTPS with a default certificate
+        // curl - k https://localhost:5001/weatherforecast
+        listenOptions.Protocols = HttpProtocols.Http1; // Only HTTP/1.1
     });
+
+    // HTTP/2 with TLS (for gRPC) on port 5001
+    options.ListenAnyIP(5001, listenOptions =>
+    {
+        // grpcurl - insecure - proto Protos / Store.proto - d '{"key":"example"}' localhost: 5001 Store.Get
+        listenOptions.Protocols = HttpProtocols.Http2; // Only HTTP/2
+        listenOptions.UseHttps(); // Enable HTTPS for gRPC
+    });
+
 });
 
 // Add services to the container.
