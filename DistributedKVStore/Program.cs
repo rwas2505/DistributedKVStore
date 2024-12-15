@@ -1,4 +1,19 @@
+using Microsoft.AspNetCore.Server.Kestrel.Core;
+
 var builder = WebApplication.CreateBuilder(args);
+
+// Add services for REST and gRPC
+builder.Services.AddControllers();
+builder.Services.AddGrpc();
+
+// Configure Kestrel for HTTP/1 and HTTP/2
+builder.WebHost.ConfigureKestrel(options =>
+{
+    options.ListenAnyIP(5000, listenOptions =>
+    {
+        listenOptions.Protocols = HttpProtocols.Http1AndHttp2;
+    });
+});
 
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -35,6 +50,10 @@ app.MapGet("/weatherforecast", () =>
 })
 .WithName("GetWeatherForecast")
 .WithOpenApi();
+
+// Map endpoints for REST and gRPC
+app.MapControllers(); // REST API
+app.MapGrpcService<GrpcStoreService>(); // gRPC service
 
 app.Run();
 
