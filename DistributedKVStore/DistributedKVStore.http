@@ -1,0 +1,6 @@
+@DistributedKVStore_HostAddress = http://localhost:5079
+
+GET {{DistributedKVStore_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
