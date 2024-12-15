@@ -6,12 +6,22 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddGrpc();
 
+// Uncomment to enable logging during runtime for debugging
+//builder.Logging.ClearProviders();
+//builder.Logging.AddConsole();
+
 // Configure Kestrel for HTTP/1 and HTTP/2
 builder.WebHost.ConfigureKestrel(options =>
 {
     options.ListenAnyIP(5000, listenOptions =>
     {
         listenOptions.Protocols = HttpProtocols.Http1AndHttp2;
+
+        // Uncommenting the below UseHttps() method will enable TLS
+        // This is required to use tools like grpcurl to hit the grpc services
+        // because grpcurl needs HTTP2. The following command should work on a local build:
+        // grpcurl -insecure -proto Protos/Store.proto -d '{"key":"example"}' localhost:5000 Store.Get
+        listenOptions.UseHttps(); // Enable HTTPS with a default certificate
     });
 });
 
