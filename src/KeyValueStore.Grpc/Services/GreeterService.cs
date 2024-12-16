@@ -1,5 +1,4 @@
 using Grpc.Core;
-using KeyValueStore.Grpc;
 
 namespace KeyValueStore.Grpc.Services;
 

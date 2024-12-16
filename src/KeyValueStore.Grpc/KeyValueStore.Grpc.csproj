@@ -8,10 +8,17 @@
 
   <ItemGroup>
     <Protobuf Include="Protos\greet.proto" GrpcServices="Server" />
+    <Protobuf Include="Protos\store.proto" GrpcServices="Server" />
+
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Grpc.AspNetCore" Version="2.57.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\KeyValueStore.Core\KeyValueStore.Core.csproj" />
+    <ProjectReference Include="..\KeyValueStore.Shared\KeyValueStore.Shared.csproj" />
   </ItemGroup>
 
 </Project>
