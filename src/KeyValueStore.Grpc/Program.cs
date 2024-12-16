@@ -1,3 +1,5 @@
+using KeyValueStore.Core.Interfaces;
+using KeyValueStore.Core.Services;
 using KeyValueStore.Grpc;
 using KeyValueStore.Grpc.Services;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
@@ -36,6 +38,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddGrpc();
+builder.Services.AddSingleton<IKeyValueStore, KeyValueStore.Core.Services.KeyValueStore>();
 
 // Configure Kestrel for HTTP/2
 builder.WebHost.ConfigureKestrel(options =>

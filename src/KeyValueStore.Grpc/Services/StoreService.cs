@@ -11,18 +11,16 @@ public class StoreService(ILogger<StoreService> logger, IKeyValueStore store) : 
     public override Task<ValueResponse> Get(KeyRequest request, ServerCallContext context)
     {
         var response = new ValueResponse();
+        response.Found = false;
+
 
         // Todo: handle null request?
-        string value = _store.Get(request.Key);
+        var value = _store.Get(request.Key);
 
         if (value != null)
         {
             response.Value = value;
             response.Found = true;
-        }
-        else
-        {
-            response.Found = false;
         }
 
         return Task.FromResult(response);

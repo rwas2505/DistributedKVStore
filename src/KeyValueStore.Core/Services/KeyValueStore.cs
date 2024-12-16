@@ -9,8 +9,12 @@ namespace KeyValueStore.Core.Services
 
         public string? Get(string key)
         {
-            _store.TryGetValue(key, out var value);
-            return value;
+            if(_store.TryGetValue(key, out var value))
+            {
+                return value;
+            }
+
+            return null;
         }
 
         public void Put(string key, string value)
