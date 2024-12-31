@@ -1,3 +1,4 @@
+using KeyValueStore.Core.Exceptions;
 using KeyValueStore.Core.Interfaces;
 using System.Collections.Concurrent;
 
@@ -19,6 +20,11 @@ namespace KeyValueStore.Core.Services
 
         public void Put(string key, string value)
         {
+            if (string.IsNullOrWhiteSpace(key))
+            {
+                throw new InvalidKeyException(ErrorMessages.InvalidKeyErrorMessage);
+            }
+
             _store[key] = value;
         }
 
