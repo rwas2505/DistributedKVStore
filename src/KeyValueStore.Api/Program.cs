@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Server.Kestrel.Core;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services for REST and gRPC
+// Add services for REST
 builder.Services.AddControllers();
 
 // Configure Kestrel for HTTP/1
@@ -30,6 +30,6 @@ app.UseHttpsRedirection();
 app.MapGet("/", () => "Hello World!");
 
 // Map endpoints for REST
-app.MapControllers(); // REST API
+app.MapControllers();
 
 app.Run();

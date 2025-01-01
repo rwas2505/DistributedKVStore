@@ -20,7 +20,7 @@ public class KeyValueStoreTests : IClassFixture<TestFixture>
     [Theory]
     public void Get_WhenKeyIsNullEmptyOrWhitespace_ThrowsInvalidKeyException(string key)
     {
-        // Arrange& Act & Assert
+        // Arrange & Act & Assert
         var exception = Assert.Throws<InvalidKeyException>(() => _keyValueStore.Get(key));
         Assert.Equal(ErrorMessages.InvalidKeyErrorMessage, exception.Message);
     }
@@ -45,9 +45,57 @@ public class KeyValueStoreTests : IClassFixture<TestFixture>
     [Theory]
     public void Delete_WhenKeyIsNullEmptyOrWhitespace_ThrowsInvalidKeyException(string key)
     {
-        // Arrange& Act & Assert
+        // Arrange & Act & Assert
         var exception = Assert.Throws<InvalidKeyException>(() => _keyValueStore.Delete(key));
         Assert.Equal(ErrorMessages.InvalidKeyErrorMessage, exception.Message);
+    }
+
+    [InlineData(null)]
+    [InlineData("")]
+    [InlineData(" ")]
+    [Theory]
+    public void PutThenGet_WhenValueIsNullEmptyOrWhitespace_ReturnsValue(string value)
+    {
+        // Arrange
+        var key = "key";
+        _keyValueStore.Put(key, value);
+
+        // Act
+        var actual = _keyValueStore.Get(key);
+
+        // Assert
+        Assert.Equal(value, actual);
+    }
+
+    [InlineData(null)]
+    [InlineData("")]
+    [InlineData(" ")]
+    [Theory]
+    public void Delete_WhenValueIsNullEmptyOrWhitespace_ReturnsValue(string value)
+    {
+        // Arrange
+        var key = "key";
+        _keyValueStore.Put(key, value);
+
+        // Act
+        var actual = _keyValueStore.Delete(key);
+
+        // Assert
+        Assert.True(actual);
+    }
+
+    [Fact]
+    public void Get_WhenKeyDoesNotExist_ShouldReturnNull()
+    {
+        // Arrange
+        var key = "non-existent key";
+        _keyValueStore.Delete(key);
+
+        // Act
+        var actual = _keyValueStore.Get(key);
+
+        // Assert
+        Assert.Null(actual);
     }
 
     [Fact]
@@ -107,5 +155,50 @@ public class KeyValueStoreTests : IClassFixture<TestFixture>
         // Act
         var actual = _keyValueStore.Delete(key);
         Assert.True(actual);
+    }
+
+    [Fact]
+    public void Get_ShouldRespectCaseSensitivityOfKeys()
+    {
+        // Arrange
+        var keyLower = "testkey";
+        var keyUpper = "TESTKEY";
+        _keyValueStore.Put(keyLower, "value 1");
+        _keyValueStore.Put(keyUpper, "value 2");
+
+        // Act
+        var valueLower = _keyValueStore.Get(keyLower);
+        var valueUpper = _keyValueStore.Get(keyUpper);
+
+        // Assert
+        Assert.Equal("value 1", valueLower);
+        Assert.Equal("value 2", valueUpper);
+    }
+
+    [Fact]
+    public void PutThenGet_ConcurrentAccess_ShouldHandleSimultaneousOperationsCorrectly()
+    {
+        // Arrange
+        var key = "concurrent test";
+        var value = "value";
+
+        // Act
+        Parallel.For(0, 100, i =>
+        {
+            _keyValueStore.Put($"{key}-{i}", $"{value}-{i}");
+        });
+
+        // Assert
+        Parallel.For(0, 100, i =>
+        {
+            var actual = _keyValueStore.Get($"{key}-{i}");
+            Assert.Equal($"{value}-{i}", actual);
+        });
+
+        Parallel.For(0, 100, i =>
+        {
+            var actual = _keyValueStore.Delete($"{key}-{i}");
+            Assert.True(actual);
+        });
     }
 }
