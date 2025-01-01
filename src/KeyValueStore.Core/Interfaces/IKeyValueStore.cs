@@ -1,9 +1,11 @@
+using KeyValueStore.Core.Models;
+
 namespace KeyValueStore.Core.Interfaces
 {
     public interface IKeyValueStore 
     {
-        string? Get(string key);
-        void Put(string key, string value);
-        bool Delete(string key);
+        GetResult Get(string key);
+        PutResult Put(string key, string value);
+        DeleteResult Delete(string key);
     }
 }
