@@ -10,8 +10,12 @@ namespace KeyValueStore.Core.Services
 
         public string? Get(string key)
         {
+            ValidateKey(key);
+
             if(_store.TryGetValue(key, out var value))
             {
+                ValidateKey(key);
+
                 return value;
             }
 
@@ -20,19 +24,26 @@ namespace KeyValueStore.Core.Services
 
         public void Put(string key, string value)
         {
-            if (string.IsNullOrWhiteSpace(key))
-            {
-                throw new InvalidKeyException(ErrorMessages.InvalidKeyErrorMessage);
-            }
+            ValidateKey(key);
 
             _store[key] = value;
         }
 
         public bool Delete(string key)
         {
+            ValidateKey(key);
+
             return _store.TryRemove(key, out _);
         }
 
         //public void RestoreFromLog()
+
+        private static void ValidateKey(string key)
+        {
+            if (string.IsNullOrWhiteSpace(key))
+            {
+                throw new InvalidKeyException(ErrorMessages.InvalidKeyErrorMessage);
+            }
+        }
     }
 }

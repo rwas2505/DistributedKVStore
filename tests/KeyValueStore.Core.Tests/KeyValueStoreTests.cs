@@ -3,6 +3,7 @@ using KeyValueStore.Core.Services;
 using KeyValueStore.Core.Interfaces;
 using KeyValueStore.Core.Exceptions;
 using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json.Linq;
 
 public class KeyValueStoreTests : IClassFixture<TestFixture>
 {
@@ -17,6 +18,17 @@ public class KeyValueStoreTests : IClassFixture<TestFixture>
     [InlineData("")]
     [InlineData(" ")]
     [Theory]
+    public void Get_WhenKeyIsNullEmptyOrWhitespace_ThrowsInvalidKeyException(string key)
+    {
+        // Arrange& Act & Assert
+        var exception = Assert.Throws<InvalidKeyException>(() => _keyValueStore.Get(key));
+        Assert.Equal(ErrorMessages.InvalidKeyErrorMessage, exception.Message);
+    }
+
+    [InlineData(null)]
+    [InlineData("")]
+    [InlineData(" ")]
+    [Theory]
     public void Put_WhenKeyIsNullEmptyOrWhitespace_ThrowsInvalidKeyException(string key)
     {
         // Arrange
@@ -24,6 +36,17 @@ public class KeyValueStoreTests : IClassFixture<TestFixture>
 
         // Act & Assert
         var exception = Assert.Throws<InvalidKeyException>(() => _keyValueStore.Put(key, value));
+        Assert.Equal(ErrorMessages.InvalidKeyErrorMessage, exception.Message);
+    }
+
+    [InlineData(null)]
+    [InlineData("")]
+    [InlineData(" ")]
+    [Theory]
+    public void Delete_WhenKeyIsNullEmptyOrWhitespace_ThrowsInvalidKeyException(string key)
+    {
+        // Arrange& Act & Assert
+        var exception = Assert.Throws<InvalidKeyException>(() => _keyValueStore.Delete(key));
         Assert.Equal(ErrorMessages.InvalidKeyErrorMessage, exception.Message);
     }
 
@@ -85,6 +108,4 @@ public class KeyValueStoreTests : IClassFixture<TestFixture>
         var actual = _keyValueStore.Delete(key);
         Assert.True(actual);
     }
-
-    // TODO: Delete_WhenKeyIsNullEmptyOrWhitespace_ReturnsInvalidKeyException
 }
