@@ -4,13 +4,6 @@ using KeyValueStore.Grpc;
 using KeyValueStore.Grpc.Services;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
 
-// To run from CLI: dotnet run --project .\KeyValueStore.Grpc
-
-// To test kv store grpc: 
-// grpcurl --insecure --proto Protos/Store.proto -d '{"key":"example"}' localhost: 5001 Store.Get
-
-
-
 // .Net default greeter service
 
 // To list services: grpcurl --insecure --proto Protos/greet.proto localhost:5001 list
@@ -30,9 +23,6 @@ using Microsoft.AspNetCore.Server.Kestrel.Core;
 //}
 // To invoke method: grpcurl--insecure--proto Protos/greet.proto -d '{"name": "John"}' localhost:5001 greet.Greeter.SayHello
 // --> returns {"message": "Hello John"}
-
-
-
 
 var builder = WebApplication.CreateBuilder(args);
 
