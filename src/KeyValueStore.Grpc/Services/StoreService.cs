@@ -15,11 +15,11 @@ public class StoreService(ILogger<StoreService> logger, IKeyValueStore store) : 
 
 
         // Todo: handle null request?
-        var value = _store.Get(request.Key);
+        var result = _store.Get(request.Key);
 
-        if (value != null)
+        if (result.Exists == true)
         {
-            response.Value = value;
+            response.Value = result.Value;
             response.Found = true;
         }
 
@@ -37,8 +37,8 @@ public class StoreService(ILogger<StoreService> logger, IKeyValueStore store) : 
     public override Task<DeleteResponse> Delete(DeleteRequest request, ServerCallContext context)
     {
         // todo: handle null request?
-        var deleted = _store.Delete(request.Key);
+        var result = _store.Delete(request.Key);
 
-        return Task.FromResult(new DeleteResponse { Deleted = deleted });
+        return Task.FromResult(new DeleteResponse { Deleted = result.IsSuccess, DeletedValue = result.DeletedValue });
     }
 }

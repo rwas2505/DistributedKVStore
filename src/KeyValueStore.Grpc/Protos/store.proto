@@ -32,4 +32,5 @@ message DeleteRequest {
 
 message DeleteResponse {
     bool deleted = 1;
+    string deletedValue = 2;
 }

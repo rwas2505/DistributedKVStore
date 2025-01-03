@@ -64,7 +64,8 @@ public class KeyValueStoreTests : IClassFixture<TestFixture>
         var actual = _keyValueStore.Get(key);
 
         // Assert
-        Assert.Equal(value, actual);
+        Assert.True(actual.Exists);
+        Assert.Equal(value, actual.Value);
     }
 
     [InlineData(null)]
@@ -81,11 +82,12 @@ public class KeyValueStoreTests : IClassFixture<TestFixture>
         var actual = _keyValueStore.Delete(key);
 
         // Assert
-        Assert.True(actual);
+        Assert.True(actual.IsSuccess);
+        Assert.Equal(value, actual.DeletedValue);
     }
 
     [Fact]
-    public void Get_WhenKeyDoesNotExist_ShouldReturnNull()
+    public void Get_WhenKeyDoesNotExist_ShouldReturnFalseAndNull()
     {
         // Arrange
         var key = "non-existent key";
@@ -95,7 +97,8 @@ public class KeyValueStoreTests : IClassFixture<TestFixture>
         var actual = _keyValueStore.Get(key);
 
         // Assert
-        Assert.Null(actual);
+        Assert.False(actual.Exists);
+        Assert.Null(actual.Value);
     }
 
     [Fact]
@@ -110,7 +113,8 @@ public class KeyValueStoreTests : IClassFixture<TestFixture>
         var actual = _keyValueStore.Get(key);
 
         // Assert
-        Assert.Equal(value, actual);
+        Assert.True(actual.Exists);
+        Assert.Equal(value, actual.Value);
     }
 
     [Fact]
@@ -127,11 +131,12 @@ public class KeyValueStoreTests : IClassFixture<TestFixture>
         var actual = _keyValueStore.Get(key);
 
         // Assert
-        Assert.Equal(valueSecond, actual);
+        Assert.True(actual.Exists);
+        Assert.Equal(valueSecond, actual.Value);
     }
 
     [Fact]
-    public void Delete_WhenKeyDoesNotExist_ReturnsFalse()
+    public void Delete_WhenKeyDoesNotExist_ReturnsFalseAndNull()
     {
         // Arrange
         var key = "delete test 1";
@@ -141,11 +146,12 @@ public class KeyValueStoreTests : IClassFixture<TestFixture>
         var actual = _keyValueStore.Delete(key);
 
         // Assert
-        Assert.False(actual);
+        Assert.False(actual.IsSuccess);
+        Assert.Null(actual.DeletedValue);
     }
 
     [Fact]
-    public void Delete_WhenKeyDoesExist_ReturnsTrue()
+    public void Delete_WhenKeyDoesExist_ReturnsTrueAndValue()
     {
         // Arrange
         var key = "delete test 2";
@@ -154,7 +160,10 @@ public class KeyValueStoreTests : IClassFixture<TestFixture>
 
         // Act
         var actual = _keyValueStore.Delete(key);
-        Assert.True(actual);
+
+        // Assert
+        Assert.True(actual.IsSuccess);
+        Assert.Equal(value, actual.DeletedValue);
     }
 
     [Fact]
@@ -171,8 +180,8 @@ public class KeyValueStoreTests : IClassFixture<TestFixture>
         var valueUpper = _keyValueStore.Get(keyUpper);
 
         // Assert
-        Assert.Equal("value 1", valueLower);
-        Assert.Equal("value 2", valueUpper);
+        Assert.Equal("value 1", valueLower.Value);
+        Assert.Equal("value 2", valueUpper.Value);
     }
 
     [Fact]
@@ -192,13 +201,14 @@ public class KeyValueStoreTests : IClassFixture<TestFixture>
         Parallel.For(0, 100, i =>
         {
             var actual = _keyValueStore.Get($"{key}-{i}");
-            Assert.Equal($"{value}-{i}", actual);
+            Assert.Equal($"{value}-{i}", actual.Value);
         });
 
         Parallel.For(0, 100, i =>
         {
             var actual = _keyValueStore.Delete($"{key}-{i}");
-            Assert.True(actual);
+            Assert.True(actual.IsSuccess);
+            Assert.Equal($"{value}-{i}", actual.DeletedValue);
         });
     }
 }
