@@ -29,7 +29,12 @@ grpcurl --insecure --proto ./src/KeyValueStore.Grpc/Protos/Store.proto -d '{"key
 
 #### Run the app
  ```bash
+#CLI (from root dir)
 dotnet run --project .\src\KeyValueStore.Rest
+
+#Docker (from /src dir)
+docker-compose down --rmi all
+docker-compose up -d
  ``` 
  
 #### Use the api (postman, curl, etc)
