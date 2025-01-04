@@ -1,3 +1,4 @@
+using KeyValueStore.Core.Interfaces;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
 
 // To run from CLI: dotnet run --project .\KeyValueStore.Rest
@@ -21,6 +22,7 @@ builder.WebHost.ConfigureKestrel(options =>
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSingleton<IKeyValueStore, KeyValueStore.Core.Services.KeyValueStore>();
 //builder.Services.AddSwaggerGen();
 
 var app = builder.Build();

@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using KeyValueStore.Core.Interfaces;
+using KeyValueStore.Rest.Models;
 
 namespace KeyValueStore.Rest.Controllers
 {
@@ -17,22 +18,22 @@ namespace KeyValueStore.Rest.Controllers
         [HttpGet("{key}")]
         public IActionResult Get(string key)
         {
-            var value = _store.Get(key);
-            return value is not null ? Ok(value) : NotFound();
+            var result = _store.Get(key);
+            return Ok(result);
         }
 
         [HttpPut("{key}")]
-        public IActionResult Put(string key, [FromBody] string value)
+        public IActionResult Put(string key, [FromBody] PutRequestDto request)
         {
-            _store.Put(key, value);
-            return Ok();
+            var result = _store.Put(key, request.Value);
+            return Ok(result);
         }
 
         [HttpDelete("{key}")]
         public IActionResult Delete(string key)
         {
-            _store.Delete(key);
-            return NoContent();
+            var result = _store.Delete(key);
+            return Ok(result);
         }
     }
 }

@@ -24,3 +24,31 @@ grpcurl --insecure --proto ./src/KeyValueStore.Grpc/Protos/Store.proto -d '{"key
 ```bash
 grpcurl --insecure --proto ./src/KeyValueStore.Grpc/Protos/Store.proto -d '{"key":"some key"}' localhost:5001 Store.Delete
 ```
+
+### REST:
+
+#### Run the app
+ ```bash
+dotnet run --project .\src\KeyValueStore.Rest
+ ``` 
+ 
+#### Use the api (postman, curl, etc)
+
+##### PUT
+```bash
+PUT method http://localhost:5000/store/testKey
+body:
+{
+    "value": "someValue2"
+}
+```
+
+##### GET
+```bash
+http://localhost:5000/store/testKey
+```
+
+##### DELETE
+```bash
+DELETE method http://localhost:5000/store/testKey
+```
