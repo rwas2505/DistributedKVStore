@@ -1,0 +1,65 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{36AEEB2C-3C36-4AFF-99EC-599658AB6570}"
+	ProjectSection(SolutionItems) = preProject
+		docker-compose.yml = docker-compose.yml
+		Dockerfile-Rest = Dockerfile-Rest
+		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KeyValueStore.Grpc", "src\KeyValueStore.Grpc\KeyValueStore.Grpc.csproj", "{2A38E9F8-0413-4996-8F00-5F017248C19F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KeyValueStore.Core", "src\KeyValueStore.Core\KeyValueStore.Core.csproj", "{9C8FFBE8-B52F-49F1-A3E8-1002A7263E4D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KeyValueStore.Shared", "src\KeyValueStore.Shared\KeyValueStore.Shared.csproj", "{7F3D0274-9F7D-4FFC-A4C3-F9BB34388CD0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{1530CF10-3684-4588-9D44-10D31C97880F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KeyValueStore.Core.Tests", "tests\KeyValueStore.Core.Tests\KeyValueStore.Core.Tests.csproj", "{12DDAD86-854E-471A-B3E4-F64EAAEF907F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KeyValueStore.Rest", "src\KeyValueStore.Rest\KeyValueStore.Rest.csproj", "{11D1B3F0-35F6-474F-BECB-ABA0E1EEDF48}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2A38E9F8-0413-4996-8F00-5F017248C19F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2A38E9F8-0413-4996-8F00-5F017248C19F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2A38E9F8-0413-4996-8F00-5F017248C19F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2A38E9F8-0413-4996-8F00-5F017248C19F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9C8FFBE8-B52F-49F1-A3E8-1002A7263E4D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9C8FFBE8-B52F-49F1-A3E8-1002A7263E4D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9C8FFBE8-B52F-49F1-A3E8-1002A7263E4D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9C8FFBE8-B52F-49F1-A3E8-1002A7263E4D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7F3D0274-9F7D-4FFC-A4C3-F9BB34388CD0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7F3D0274-9F7D-4FFC-A4C3-F9BB34388CD0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7F3D0274-9F7D-4FFC-A4C3-F9BB34388CD0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7F3D0274-9F7D-4FFC-A4C3-F9BB34388CD0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{12DDAD86-854E-471A-B3E4-F64EAAEF907F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{12DDAD86-854E-471A-B3E4-F64EAAEF907F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{12DDAD86-854E-471A-B3E4-F64EAAEF907F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{12DDAD86-854E-471A-B3E4-F64EAAEF907F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{11D1B3F0-35F6-474F-BECB-ABA0E1EEDF48}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{11D1B3F0-35F6-474F-BECB-ABA0E1EEDF48}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{11D1B3F0-35F6-474F-BECB-ABA0E1EEDF48}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{11D1B3F0-35F6-474F-BECB-ABA0E1EEDF48}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{2A38E9F8-0413-4996-8F00-5F017248C19F} = {36AEEB2C-3C36-4AFF-99EC-599658AB6570}
+		{9C8FFBE8-B52F-49F1-A3E8-1002A7263E4D} = {36AEEB2C-3C36-4AFF-99EC-599658AB6570}
+		{7F3D0274-9F7D-4FFC-A4C3-F9BB34388CD0} = {36AEEB2C-3C36-4AFF-99EC-599658AB6570}
+		{12DDAD86-854E-471A-B3E4-F64EAAEF907F} = {1530CF10-3684-4588-9D44-10D31C97880F}
+		{11D1B3F0-35F6-474F-BECB-ABA0E1EEDF48} = {36AEEB2C-3C36-4AFF-99EC-599658AB6570}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {6988746D-C62D-4DF6-BE7D-EB958008A3EA}
+	EndGlobalSection
+EndGlobal

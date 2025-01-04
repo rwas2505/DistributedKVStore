@@ -1,10 +1,11 @@
 syntax = "proto3";
 
-option csharp_namespace = "DistributedKVStore";
+option csharp_namespace = "KeyValueStore.Grpc";
 
 service Store {
     rpc Get (KeyRequest) returns (ValueResponse);
     rpc Put (PutRequest) returns (PutResponse);
+    rpc Delete (DeleteRequest) returns (DeleteResponse);
 }
 
 message KeyRequest {
@@ -23,4 +24,13 @@ message PutRequest {
 
 message PutResponse {
     string message = 1;
+}
+
+message DeleteRequest {
+    string key = 1;
+}
+
+message DeleteResponse {
+    bool deleted = 1;
+    string deletedValue = 2;
 }
