@@ -5,8 +5,6 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{36AEEB2C-3C36-4AFF-99EC-599658AB6570}"
 	ProjectSection(SolutionItems) = preProject
-		docker-compose.yml = docker-compose.yml
-		Dockerfile-Rest = Dockerfile-Rest
 		README.md = README.md
 	EndProjectSection
 EndProject
@@ -21,6 +19,12 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KeyValueStore.Core.Tests", "tests\KeyValueStore.Core.Tests\KeyValueStore.Core.Tests.csproj", "{12DDAD86-854E-471A-B3E4-F64EAAEF907F}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KeyValueStore.Rest", "src\KeyValueStore.Rest\KeyValueStore.Rest.csproj", "{11D1B3F0-35F6-474F-BECB-ABA0E1EEDF48}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{E521223F-BFED-48EC-BFC4-1B7D09E262FF}"
+	ProjectSection(SolutionItems) = preProject
+		docker-compose.yml = docker-compose.yml
+		Dockerfile-Rest = Dockerfile-Rest
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
