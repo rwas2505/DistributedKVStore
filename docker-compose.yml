@@ -1,0 +1,19 @@
+version: '3.9'
+services:
+  rest-service:
+    build:
+      context: src
+      dockerfile: ../Rest.Dockerfile
+    ports:
+      - "5000:5000"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+
+  grpc-service:
+    build:
+      context: src
+      dockerfile: ../Grpc.Dockerfile
+    ports:
+      - "5001:5001"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
