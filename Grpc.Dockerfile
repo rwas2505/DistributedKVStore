@@ -18,7 +18,8 @@ FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS runtime
 WORKDIR /app
 COPY --from=build /publish . 
 
-# Copy the cert.p12 into the container
+# Copy the self signed cert into the container. This is required for http2 over https communication
+# TODO: dynamically generate this with a script each time since it will eventually expire
 COPY ["resources/cert.p12", "/app/cert.p12"]
 
 # Set the environment variables for the certificate path and password

@@ -6,7 +6,6 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{36AEEB2C-3C36-4AFF-99EC-599658AB6570}"
 	ProjectSection(SolutionItems) = preProject
 		README.md = README.md
-		test.txt = test.txt
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KeyValueStore.Grpc", "src\KeyValueStore.Grpc\KeyValueStore.Grpc.csproj", "{2A38E9F8-0413-4996-8F00-5F017248C19F}"
@@ -24,8 +23,8 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{E521223F-BFED-48EC-BFC4-1B7D09E262FF}"
 	ProjectSection(SolutionItems) = preProject
 		docker-compose.yml = docker-compose.yml
-		Rest.Dockerfile = Rest.Dockerfile
 		Grpc.Dockerfile = Grpc.Dockerfile
+		Rest.Dockerfile = Rest.Dockerfile
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "resources", "resources", "{90CDF8DC-01F3-47C4-B13F-EF5C5396ABA0}"
