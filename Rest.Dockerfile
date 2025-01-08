@@ -19,7 +19,6 @@ WORKDIR /app
 COPY --from=build /publish . 
 
 # Expose ports
-EXPOSE 5000
 EXPOSE 5001
 
 ENTRYPOINT ["dotnet", "KeyValueStore.Rest.dll"]

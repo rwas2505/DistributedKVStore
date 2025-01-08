@@ -32,7 +32,7 @@ grpcurl --insecure --proto ./src/KeyValueStore.Grpc/Protos/Store.proto -d '{"key
 #CLI (from root dir)
 dotnet run --project .\src\KeyValueStore.Rest
 
-#Docker (from /src dir)
+#Docker (from root dir)
 docker-compose down --rmi all
 docker-compose up -d
  ``` 

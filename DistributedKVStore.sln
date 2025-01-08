@@ -6,6 +6,7 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{36AEEB2C-3C36-4AFF-99EC-599658AB6570}"
 	ProjectSection(SolutionItems) = preProject
 		README.md = README.md
+		test.txt = test.txt
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KeyValueStore.Grpc", "src\KeyValueStore.Grpc\KeyValueStore.Grpc.csproj", "{2A38E9F8-0413-4996-8F00-5F017248C19F}"
@@ -23,7 +24,13 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{E521223F-BFED-48EC-BFC4-1B7D09E262FF}"
 	ProjectSection(SolutionItems) = preProject
 		docker-compose.yml = docker-compose.yml
-		Dockerfile-Rest = Dockerfile-Rest
+		Rest.Dockerfile = Rest.Dockerfile
+		Grpc.Dockerfile = Grpc.Dockerfile
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "resources", "resources", "{90CDF8DC-01F3-47C4-B13F-EF5C5396ABA0}"
+	ProjectSection(SolutionItems) = preProject
+		src\resources\cert.p12 = src\resources\cert.p12
 	EndProjectSection
 EndProject
 Global
@@ -62,6 +69,7 @@ Global
 		{7F3D0274-9F7D-4FFC-A4C3-F9BB34388CD0} = {36AEEB2C-3C36-4AFF-99EC-599658AB6570}
 		{12DDAD86-854E-471A-B3E4-F64EAAEF907F} = {1530CF10-3684-4588-9D44-10D31C97880F}
 		{11D1B3F0-35F6-474F-BECB-ABA0E1EEDF48} = {36AEEB2C-3C36-4AFF-99EC-599658AB6570}
+		{90CDF8DC-01F3-47C4-B13F-EF5C5396ABA0} = {36AEEB2C-3C36-4AFF-99EC-599658AB6570}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {6988746D-C62D-4DF6-BE7D-EB958008A3EA}

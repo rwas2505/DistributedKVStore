@@ -1,22 +1,19 @@
 version: '3.9'
 services:
-  rest-service:
+  # rest-service:
+  #   build:
+  #     context: src
+  #     dockerfile: ../Rest.Dockerfile
+  #   ports:
+  #     - "5000:5000"
+  #   environment:
+  #     - ASPNETCORE_ENVIRONMENT=Development
+
+  grpc-service:
     build:
       context: src
-      dockerfile: ../Dockerfile-Rest
+      dockerfile: ../Grpc.Dockerfile
     ports:
-      - "5000:5000" # REST HTTP port
-      - "5001:5001" # REST HTTPS port
+      - "5001:5001"
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-
-  # grpc-service:
-  #   build:
-  #     context: .
-  #     dockerfile: KeyValueStore.Grpc/Dockerfile
-  #   ports:
-  #     - "6000:6000" # gRPC HTTP port
-  #     - "6001:6001" # gRPC HTTPS port
-  #   environment:
-  #     - DOTNET_RUNNING_IN_CONTAINER=true
-  #     - ASPNETCORE_ENVIRONMENT=Development
