@@ -1,8 +1,6 @@
 using KeyValueStore.Core.Interfaces;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
 
-// To run from CLI: dotnet run --project .\KeyValueStore.Rest
-
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services for REST

@@ -32,6 +32,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "resources", "resources", "{
 		src\resources\cert.p12 = src\resources\cert.p12
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KeyValueStore.Rest.Tests", "tests\KeyValueStore.Rest.Tests\KeyValueStore.Rest.Tests.csproj", "{511BDCDB-8572-4D45-BFC4-E4B6C881025C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -58,6 +60,10 @@ Global
 		{11D1B3F0-35F6-474F-BECB-ABA0E1EEDF48}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{11D1B3F0-35F6-474F-BECB-ABA0E1EEDF48}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{11D1B3F0-35F6-474F-BECB-ABA0E1EEDF48}.Release|Any CPU.Build.0 = Release|Any CPU
+		{511BDCDB-8572-4D45-BFC4-E4B6C881025C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{511BDCDB-8572-4D45-BFC4-E4B6C881025C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{511BDCDB-8572-4D45-BFC4-E4B6C881025C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{511BDCDB-8572-4D45-BFC4-E4B6C881025C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -69,6 +75,7 @@ Global
 		{12DDAD86-854E-471A-B3E4-F64EAAEF907F} = {1530CF10-3684-4588-9D44-10D31C97880F}
 		{11D1B3F0-35F6-474F-BECB-ABA0E1EEDF48} = {36AEEB2C-3C36-4AFF-99EC-599658AB6570}
 		{90CDF8DC-01F3-47C4-B13F-EF5C5396ABA0} = {36AEEB2C-3C36-4AFF-99EC-599658AB6570}
+		{511BDCDB-8572-4D45-BFC4-E4B6C881025C} = {1530CF10-3684-4588-9D44-10D31C97880F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {6988746D-C62D-4DF6-BE7D-EB958008A3EA}
