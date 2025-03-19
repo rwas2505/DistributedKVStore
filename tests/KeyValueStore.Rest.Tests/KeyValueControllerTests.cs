@@ -1,5 +1,4 @@
 using Moq;
-using Xunit;
 using KeyValueStore.Core.Interfaces;
 using KeyValueStore.Rest.Models;
 using System.Text;
@@ -12,27 +11,25 @@ namespace KeyValueStore.Rest.Tests;
 public class KeyValueControllerTests : IClassFixture<TestWebApplicationFactory<Program>>
 {
     private readonly TestWebApplicationFactory<Program> _factory;
-    private readonly Mock<IKeyValueStore> _storeMock;
-    private readonly HttpClient _client;
 
     public KeyValueControllerTests(TestWebApplicationFactory<Program> factory)
     {
         _factory = factory;
-        _storeMock = new Mock<IKeyValueStore>();
-        _factory.SetupService(_storeMock);
-        _client = _factory.CreateClient();
     }
 
     [Fact]
-    public async void Get_KeyExists_ReturnsOkResultWithKeyValue()
+    public async Task Get_KeyExists_ReturnsOkResultWithKeyValue()
     {
         // Arrange
-        var key = "test-key";
-        var value = "test-value";
-        _storeMock.Setup(s => s.Get(key)).Returns(new GetResult { Value = value });
+        var key = "test-key-get-exists";
+        var value = "test-value-get-exists";
+        var storeMock = new Mock<IKeyValueStore>();
+        storeMock.Setup(s => s.Get(key)).Returns(new GetResult { Value = value });
+        
+        var client = CreateClientWithMock(storeMock);
 
         // Act
-        var response = await _client.GetAsync($"store/{key}");
+        var response = await client.GetAsync($"store/{key}");
         var result = await response.Content.ReadFromJsonAsync<GetResult>();
 
         // Assert
@@ -42,14 +39,17 @@ public class KeyValueControllerTests : IClassFixture<TestWebApplicationFactory<P
     }
 
     [Fact]
-    public async void Get_KeyDoesNotExist_ReturnsOkResultWithNullValue()
+    public async Task Get_KeyDoesNotExist_ReturnsOkResultWithNullValue()
     {
         // Arrange
-        var key = Guid.NewGuid().ToString();
-        _storeMock.Setup(s => s.Get(key)).Returns(new GetResult{ Value = null });
+        var key = "test-key-get-not-exists";
+        var storeMock = new Mock<IKeyValueStore>();
+        storeMock.Setup(s => s.Get(key)).Returns(new GetResult { Value = null });
+        
+        var client = CreateClientWithMock(storeMock);
 
         // Act
-        var response = await _client.GetAsync($"store/{key}");
+        var response = await client.GetAsync($"store/{key}");
         var result = await response.Content.ReadFromJsonAsync<GetResult>();
 
         // Assert
@@ -59,16 +59,19 @@ public class KeyValueControllerTests : IClassFixture<TestWebApplicationFactory<P
     }
 
     [Fact]
-    public async void Put_KeyAndValueProvided_IsNotUpdate_ReturnsSuccessAndNotUpdate()
+    public async Task Put_KeyAndValueProvided_IsNotUpdate_ReturnsSuccessAndNotUpdate()
     {
         // Arrange
-        var key = Guid.NewGuid().ToString();
-        var request = new PutRequestDto("test-value");
-        _storeMock.Setup(s => s.Put(key, request.Value)).Returns(new PutResult{ IsSuccess = true, IsUpdate = false });
+        var key = "test-key-put";
+        var request = new PutRequestDto("test-value-put");
+        var storeMock = new Mock<IKeyValueStore>();
+        storeMock.Setup(s => s.Put(key, request.Value)).Returns(new PutResult { IsSuccess = true, IsUpdate = false });
+        
+        var client = CreateClientWithMock(storeMock);
 
         // Act
         var content = new StringContent(JsonSerializer.Serialize(request), Encoding.UTF8, "application/json");
-        var response = await _client.PutAsync($"store/{key}", content);
+        var response = await client.PutAsync($"store/{key}", content);
         var result = await response.Content.ReadFromJsonAsync<PutResult>();
 
         // Assert
@@ -79,15 +82,18 @@ public class KeyValueControllerTests : IClassFixture<TestWebApplicationFactory<P
     }
 
     [Fact]
-    public async void Delete_KeyProvided_ReturnsOkResult()
+    public async Task Delete_KeyProvided_ReturnsOkResult()
     {
         // Arrange
-        var key = Guid.NewGuid().ToString();
-        var value = "somevalue";
-        _storeMock.Setup(s => s.Delete(key)).Returns(new DeleteResult { IsSuccess = true, DeletedValue = value});
+        var key = "test-key-delete";
+        var value = "test-value-delete";
+        var storeMock = new Mock<IKeyValueStore>();
+        storeMock.Setup(s => s.Delete(key)).Returns(new DeleteResult { IsSuccess = true, DeletedValue = value });
+        
+        var client = CreateClientWithMock(storeMock);
 
         // Act
-        var response = await _client.DeleteAsync($"store/{key}");
+        var response = await client.DeleteAsync($"store/{key}");
         var result = await response.Content.ReadFromJsonAsync<DeleteResult>();
 
         // Assert
@@ -95,5 +101,20 @@ public class KeyValueControllerTests : IClassFixture<TestWebApplicationFactory<P
         Assert.NotNull(result);
         Assert.True(result.IsSuccess);
         Assert.Equal(value, result.DeletedValue);
+    }
+
+    private HttpClient CreateClientWithMock(Mock<IKeyValueStore> storeMock)
+    {
+        // Create a fresh factory instance for each test
+        var factory = _factory.WithWebHostBuilder(builder =>
+        {
+            builder.ConfigureServices(services =>
+            {
+                // Replace the IKeyValueStore with the mock for this specific test
+                _factory.SetupService(storeMock);
+            });
+        });
+        
+        return factory.CreateClient();
     }
 }
