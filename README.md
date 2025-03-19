@@ -2,9 +2,15 @@
 
 This app supports both grpc (http2) and rest (http1) services.
 <br>
+#### Run the tests
+```bash
+dotnet test tests\KeyValueStore.Rest.Tests\KeyValueStore.Rest.Tests.csproj
+
+dotnet test tests\KeyValueStore.Core.Tests\KeyValueStore.Core.Tests.csproj
+```
 #### Run the app
 In order to start both services quickly with docker run the below from the root directory to tear down any stale resources and then build and run the services fresh
-```bas
+```bash
 docker compose down --rmi all
 docker compose up -d
 ```

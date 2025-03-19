@@ -1,13 +1,11 @@
 using KeyValueStore.Core.Interfaces;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
 
-// To run from CLI: dotnet run --project .\KeyValueStore.Rest
-
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services for REST
 builder.Services.AddControllers();
-
+    
 // Configure Kestrel for HTTP/1
 builder.WebHost.ConfigureKestrel(options =>
 {
@@ -35,3 +33,6 @@ app.MapGet("/", () => "Hello World!");
 app.MapControllers();
 
 app.Run();
+
+public partial class Program
+{ }
