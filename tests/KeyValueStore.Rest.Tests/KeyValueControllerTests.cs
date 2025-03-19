@@ -4,6 +4,8 @@ using KeyValueStore.Core.Interfaces;
 using KeyValueStore.Rest.Models;
 using System.Text;
 using System.Net.Http.Json;
+using KeyValueStore.Core.Models;
+using System.Text.Json;
 
 namespace KeyValueStore.Rest.Tests;
 
@@ -22,7 +24,7 @@ public class KeyValueControllerTests : IClassFixture<TestWebApplicationFactory<P
     }
 
     [Fact]
-    public async Task Get_KeyExists_ReturnsOkResultWithKeyValue()
+    public async void Get_KeyExists_ReturnsOkResultWithKeyValue()
     {
         // Arrange
         var key = "test-key";
@@ -31,58 +33,67 @@ public class KeyValueControllerTests : IClassFixture<TestWebApplicationFactory<P
 
         // Act
         var response = await _client.GetAsync($"store/{key}");
+        var result = await response.Content.ReadFromJsonAsync<GetResult>();
 
         // Assert
         response.EnsureSuccessStatusCode();
-        var responseBody = await response.Content.ReadAsStringAsync();
-        Assert.Equal($"\"{value}\"", responseBody);
+        Assert.NotNull(result);
+        Assert.Equal(value, result.Value);
     }
 
     [Fact]
-    public async Task Get_KeyDoesNotExist_ReturnsOkResultWithNullValue()
+    public async void Get_KeyDoesNotExist_ReturnsOkResultWithNullValue()
     {
         // Arrange
-        var key = "test-key";
+        var key = Guid.NewGuid().ToString();
         _storeMock.Setup(s => s.Get(key)).Returns(new GetResult{ Value = null });
 
         // Act
         var response = await _client.GetAsync($"store/{key}");
+        var result = await response.Content.ReadFromJsonAsync<GetResult>();
 
         // Assert
         response.EnsureSuccessStatusCode();
-        var responseBody = await response.Content.ReadAsStringAsync();
-        Assert.Equal("null", responseBody);
+        Assert.NotNull(result);
+        Assert.Null(result.Value);
     }
 
     [Fact]
-    public async Task Put_KeyAndValueProvided_IsNotUpdate_ReturnsSuccessAndNotUpdate()
+    public async void Put_KeyAndValueProvided_IsNotUpdate_ReturnsSuccessAndNotUpdate()
     {
         // Arrange
         var key = Guid.NewGuid().ToString();
         var request = new PutRequestDto("test-value");
-        _storeMock.Setup(s => s.Put(key, request.Value)).Returns(new Core.Models.PutResult{ IsSuccess = true, IsUpdate = false });
+        _storeMock.Setup(s => s.Put(key, request.Value)).Returns(new PutResult{ IsSuccess = true, IsUpdate = false });
 
         // Act
-        var content = new StringContent(System.Text.Json.JsonSerializer.Serialize(request), Encoding.UTF8, "application/json");
+        var content = new StringContent(JsonSerializer.Serialize(request), Encoding.UTF8, "application/json");
         var response = await _client.PutAsync($"store/{key}", content);
+        var result = await response.Content.ReadFromJsonAsync<PutResult>();
 
         // Assert
         response.EnsureSuccessStatusCode();
-        var responseBody = await response.Content.ReadAsStringAsync();
-        Assert.Equal($"\"{request.Value}\"", responseBody);
+        Assert.NotNull(result);
+        Assert.False(result.IsUpdate);
+        Assert.True(result.IsSuccess);
     }
 
     [Fact]
-    public async Task Delete_KeyProvided_ReturnsOkResult()
+    public async void Delete_KeyProvided_ReturnsOkResult()
     {
         // Arrange
-        var key = "test-key";
-        _storeMock.Setup(s => s.Delete(key));
+        var key = Guid.NewGuid().ToString();
+        var value = "somevalue";
+        _storeMock.Setup(s => s.Delete(key)).Returns(new DeleteResult { IsSuccess = true, DeletedValue = value});
 
         // Act
         var response = await _client.DeleteAsync($"store/{key}");
+        var result = await response.Content.ReadFromJsonAsync<DeleteResult>();
 
         // Assert
         response.EnsureSuccessStatusCode();
+        Assert.NotNull(result);
+        Assert.True(result.IsSuccess);
+        Assert.Equal(value, result.DeletedValue);
     }
 }
