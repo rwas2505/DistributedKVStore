@@ -19,7 +19,6 @@ using System.Linq;
 namespace KeyValueStore.Rest.Tests;
 
 
-// Here is what I need: https://learn.microsoft.com/en-us/aspnet/core/grpc/test-services?view=aspnetcore-8.0#integration-test-grpc-services
 public class StoreServiceTests : IClassFixture<StoreServiceTests.GrpcTestFixture>
 {
     private readonly GrpcTestFixture _fixture;
