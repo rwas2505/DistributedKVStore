@@ -16,8 +16,7 @@ using KeyValueStore.Grpc;
 using KeyValueStore.Grpc.Services;
 using System.Linq;
 
-namespace KeyValueStore.Rest.Tests;
-
+namespace KeyValueStore.Grpc.Tests;
 
 public class StoreServiceTests : IClassFixture<StoreServiceTests.GrpcTestFixture>
 {
@@ -258,7 +257,7 @@ public class StoreServiceTests : IClassFixture<StoreServiceTests.GrpcTestFixture
 
             _server = new TestServer(builder);
 
-            // Create gRPC channel
+            // Create new gRPC channel
             Channel = GrpcChannel.ForAddress("http://localhost", 
                 new GrpcChannelOptions 
                 { 
@@ -269,10 +268,9 @@ public class StoreServiceTests : IClassFixture<StoreServiceTests.GrpcTestFixture
 
         public void Dispose()
         {
-            Channel.Dispose();
-            _server.Dispose();
-            _serviceProvider.Dispose();
-            _loggerFactory.Dispose();
+            Channel?.Dispose();
+            _server?.Dispose();
+            _serviceProvider?.Dispose();
         }
     }
-}
+} 
